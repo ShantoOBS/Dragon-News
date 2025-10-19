@@ -1,12 +1,40 @@
 import React from 'react'
 import Header from '../Components/Header/Header'
 import BreakingNews from '../Components/BreakingNews/BreakingNews'
+import Navbar from '../Components/Navbar/Navbar'
+import RightAside from '../Components/RIghtAside/RightAside'
+import LeftAside from '../Components/LeftAside/LeftAside'
+import { Outlet } from 'react-router'
 
 export default function Home() {
-  return (
-    <div>
-           <Header></Header>
-           <BreakingNews></BreakingNews>
-    </div>
-  )
+    return (
+        <div  className='w-11/12 mx-auto text-start'>
+           
+
+            <div className=''>
+
+                <Header></Header>
+                <BreakingNews></BreakingNews>
+                <Navbar></Navbar>
+
+            </div>
+
+            <main className='grid grid-cols-12 mt-3 gap-4 '>
+
+                <aside className='col-span-3 sticky top-0 h-fit'>
+                    <RightAside></RightAside>
+                </aside>
+                <main className='col-span-6 '>
+                    <p className='font-semibold mb-2'>Dragon News Home</p>
+                    <Outlet></Outlet>
+
+                </main>
+                <aside className='col-span-3 sticky top-0 h-fit'>
+                    <LeftAside></LeftAside>
+
+                </aside>
+            </main>
+
+        </div>
+    )
 }

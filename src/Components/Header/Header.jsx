@@ -4,7 +4,7 @@ import TimeAndData from '../TimeAndData/TimeAndData'
 
 export default function Header() {
   return (
-    <div className='flex justify-center items-center mb-2'>
+    <div className='flex justify-center items-center mb-2 p-4 text-center'>
 
          <div className='space-y-2'>
 
