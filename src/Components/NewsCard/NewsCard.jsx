@@ -1,14 +1,13 @@
 import React from "react";
 import { FaEye, FaStar, FaShareAlt } from "react-icons/fa";
 import { IoBookmarkOutline } from "react-icons/io5";
+import { Link } from "react-router";
 
 const NewsCard = ({ news }) => {
 
-  const handleNews=(event)=>{
-    event.preventDefault();
-      
-  }
+
   const {
+    id,
     title,
     details,
     thumbnail_url,
@@ -64,9 +63,9 @@ const NewsCard = ({ news }) => {
       <div className="px-4 py-3 text-sm text-gray-700">
         <p>
           {details.slice(0, 180)}...
-          <button onClick={handleNews} className="text-blue-600 font-semibold cursor-pointer">
+          <Link to={`/news-details/${id}`} className="text-blue-600 font-semibold cursor-pointer">
             Read More
-          </button>
+          </Link>
         </p>
 
         <p className="mt-2 text-xs text-gray-500">

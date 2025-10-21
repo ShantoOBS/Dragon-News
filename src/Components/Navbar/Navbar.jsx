@@ -5,7 +5,15 @@ import ProfileImg from '../../assets/user.png'
 import { AuthContext } from '../../Provider/AuthProvider'
 export default function Navbar() {
 
-  const {user}=useContext(AuthContext);
+  const {user,signOutUser,setError}=useContext(AuthContext);
+
+
+  const handleLogout=(event)=>{
+      event.preventDefault();
+      signOutUser()
+      .then(()=>{})
+      .catch((error)=>setError(error.meassage));
+  }
 
   const links= <>
 
@@ -38,8 +46,16 @@ export default function Navbar() {
     </ul>
   </div>
   <div className="navbar-end space-x-2">
-    <img src={ProfileImg} alt="" />
-    <Link to="/auth/login" className="btn bg-[#403F3F] text-white">Login</Link>
+
+    
+    <img src={`${user?user?.photoURL:ProfileImg}`} alt="" className='w-10 h-10' />
+  
+   
+
+   {
+     user ? <button onClick={handleLogout} className="btn bg-[#403F3F] text-white" >LogOut</button> : <Link to="/auth/login" className="btn bg-[#403F3F] text-white">Login</Link>
+   }
+    
   </div>
 </div>
     </div>

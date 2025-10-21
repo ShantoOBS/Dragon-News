@@ -1,49 +1,70 @@
-import React from 'react'
-import { Link } from 'react-router'
+import React, { useContext } from 'react';
+import { Link } from 'react-router';
+import { AuthContext } from '../Provider/AuthProvider';
+
 export default function Register() {
+  const { cerateUser, setError, updatePro, setUser } = useContext(AuthContext);
 
-  const handleRegiter=(event)=>{
-      event.preventDefault();
-      const email=event.target.email.value;
-      const name=event.target.name.value;
-      const photoURL=event.target.photoURL.value;
-      const password=event.target.password.value;
-  }
+  const handleRegister = (event) => {
+    event.preventDefault();
+
+    const email = event.target.email.value;
+    const name = event.target.name.value;
+    const photo = event.target.photoURL.value;
+    const password = event.target.password.value;
+
+    cerateUser(email, password)
+      .then((res) => {
+        const user = res.user;
+
+        updatePro({ displayName: name, photoURL: photo })
+          .then(() => {
+ 
+            setUser({ ...user, displayName: name, photoURL: photo });
+            
+          })
+          .catch((error) => {
+            setError(error.message);
+            setUser(user); 
+          });
+      })
+      .catch((error) => {
+        setError(error.message);
+      });
+  };
+
   return (
-     <div className='flex justify-center items-center'>
+    <div className="flex justify-center items-center">
+      <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <p className="text-2xl font-semibold text-center mt-4">Register your account</p>
 
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <div className="card-body">
+          <form onSubmit={handleRegister}>
+            <fieldset className="fieldset">
+              <label className="label">Your Name</label>
+              <input type="text" className="input" placeholder="Name" name="name" required />
 
-                <p className='text-2xl font-semibold'>Register your account</p>
-                <div className="card-body">
+              <label className="label">Photo URL</label>
+              <input type="text" className="input" placeholder="Photo URL" name="photoURL" required />
 
-                    <form onSubmit={handleRegiter}>
+              <label className="label">Email</label>
+              <input type="email" className="input" placeholder="Email" name="email" required />
 
-                        <fieldset className="fieldset">
+              <label className="label">Password</label>
+              <input type="password" className="input" placeholder="Password" name="password" required />
 
-                              <label className="label">Your Name</label>
-                            <input type="text" className="input" placeholder="Name" name="name" />
+              <button className="btn btn-neutral mt-4">Register</button>
 
-
-                              <label className="label">Photo URL</label>
-                            <input type="text" className="input" placeholder="Photo URL" name="photoURL"/>
-
-                            <label className="label">Email</label>
-                            <input type="email" className="input" placeholder="Email" name="email" />
-
-                            <label className="label">Password</label>
-                            <input type="password" className="input" placeholder="Password" name="password" />
-                 
-                          
-                            <button className="btn btn-neutral mt-4">Register</button>
-                              <p className='font-medium'>All Ready Have A Account? <Link className='text-blue-500 underline' to="/auth/login"> Login </Link> </p>
-                        </fieldset>
-
-                    </form>
-
-                </div>
-            </div>
-
-     </div>
-  )
+              <p className="font-medium text-center mt-2">
+                Already have an account?{' '}
+                <Link className="text-blue-500 underline" to="/auth/login">
+                  Login
+                </Link>
+              </p>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
 }
