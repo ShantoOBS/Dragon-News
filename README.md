@@ -89,6 +89,28 @@
 
 <hr/>
 
+## Layouts & Design
+
+There will be three layour for the project. watch below designs to understand layout structure/
+
+### News Layout
+
+ <img src="https://i.ibb.co.com/sJFwsTBZ/home-layout.png"/>
+
+### News-Details Layout
+
+ <img src="https://i.ibb.co.com/4ZJ3wBfq/news-details-layout.png"/>
+
+### Auth Layout
+
+<table>
+ <tr>
+   <td> <img  src="https://i.ibb.co.com/BVtvwgbN/auth-layout-login.png"/></td>
+   <td> <img src="https://i.ibb.co.com/27Rmt7C5/auth-layout-register.png"/></td>
+ </tr> 
+</table>
+<hr/>
+
 <h2>⚙️ How to Run Locally</h2>
 
 <ol>
@@ -139,3 +161,5 @@ VITE_APPID=your_app_id
 <p align="center">
   <b>Made with ❤️ by Shanta Shil</b>
 </p>
+
+
