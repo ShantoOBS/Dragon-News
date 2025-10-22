@@ -115,7 +115,7 @@ There will be three layour for the project. watch below designs to understand la
 
 <ol>
   <li>Clone the repository:
-    <pre><code>git clone https://github.com/ShantoOBS/dragon-news.git</code></pre>
+    <pre><code>git clone https://github.com/ShantoOBS/Dragon-News.git</code></pre>
   </li>
   <li>Navigate to the project directory:
     <pre><code>cd dragon-news</code></pre>
