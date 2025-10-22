@@ -8,7 +8,7 @@
 <hr/>
 
 <h2>🚀 Live Demo</h2>
-<p>🔗 <a href="#">Click here to visit the live site</a></p>
+<p>🔗 <a href="https://dragon-news-d3969.web.app/" target="_blank" >Click here to visit the live site</a></p>
 
 <hr/>
 
