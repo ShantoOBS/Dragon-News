@@ -15,8 +15,8 @@ export default function AuthProvider({children}) {
     const [error,setError]=useState("");
     const [loading,setLoading]=useState(true);
 
-    const emailVerify=(email)=>{
-      return sendEmailVerification(email);
+    const emailVerify=(currentUser)=>{
+      return sendEmailVerification(currentUser);
     }
 
     const forgatePass=(email)=>{

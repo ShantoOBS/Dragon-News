@@ -1,76 +1,90 @@
-import React, { useContext } from 'react'
-import { Link, Navigate, useLocation } from 'react-router'
+import React, { useContext, useRef } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { AuthContext } from '../Provider/AuthProvider';
-import { useNavigate } from 'react-router';
 
 export default function Login() {
+  const { loginUser, setError, setUser, error, forgatePass } = useContext(AuthContext);
+  const nav = useNavigate();
+  const location = useLocation();
+  const emailRef = useRef(); 
 
-  const {loginUser,setError,setUser,error,forgatePass}=useContext(AuthContext);
-  const nav=useNavigate();
-  const location=useLocation();
- 
-  const handleLogin=(event)=>{
-      event.preventDefault();
-      const email=event.target.email.value;
-      const password=event.target.password.value;
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
 
-      loginUser(email,password)
-      .then((res)=>{
-        if(!res.user.emailVerified){
-            alert("please verify you mail,,");
-        
+    loginUser(email, password)
+      .then((res) => {
+        if (!res.user.emailVerified) {
+          alert('Please verify your email first!');
+          return;
         }
-        setUser(res.user)
-        nav(`${location.state?location.state:"/"}`)
-        
+        setUser(res.user);
+        nav(location.state ? location.state : '/');
       })
-      .catch((error)=>{setError(error.message)})
+      .catch((err) => setError(err.message));
+  };
 
+  const handleForgate = () => {
+    const email = emailRef.current.value; 
 
-  }
-  
-  const handleForgate=(event)=>{
+    if (!email) {
+      alert('Please enter your email first!');
+      return;
+    }
 
-      event.preventDefault();
-      console.log('for');
-      const email=event.target.email.value;
-      forgatePass(email)
-      .then(()=>{alert("Go to the mail,,")})
-      .catch(()=>{})
-     
-  }
-    return (
-        <div className='flex justify-center items-center'>
+    forgatePass(email)
+      .then(() => alert('Password reset link sent to your email.'))
+      .catch((err) => setError(err.message));
+  };
 
-            <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+  return (
+    <div className="flex justify-center items-center">
+      <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
+        <p className="text-2xl font-semibold text-center mt-4">Login your account</p>
+        <div className="card-body">
+          <form onSubmit={handleLogin}>
+            <fieldset className="fieldset">
+              <label className="label">Email</label>
+              <input
+                type="email"
+                className="input"
+                placeholder="Email"
+                name="email"
+                ref={emailRef} 
+                required
+              />
 
-                <p className='text-2xl font-semibold'>Login your account</p>
-                <div className="card-body">
+              <label className="label">Password</label>
+              <input
+                type="password"
+                className="input"
+                placeholder="Password"
+                name="password"
+              />
 
-                    <form onSubmit={handleLogin}>
+              <button
+                type="button" 
+                onClick={handleForgate}
+                className="text-start hover:text-red-500 cursor-pointer"
+              >
+                Forgot password?
+              </button>
 
-                        <fieldset className="fieldset">
-                            <label className="label">Email</label>
-                            <input type="email" className="input" placeholder="Email" name="email" required />
+              {error && <p className="text-red-500">{error}</p>}
 
-                            <label className="label">Password</label>
-                            <input type="password" className="input" placeholder="Password" name="password"  />
-                            
-                            <button onClick={handleForgate} className='text-start hover:text-red-500 cursor-pointer'>Forgot password?</button>
+              <button className="btn btn-neutral mt-4 w-full">Login</button>
 
-                            {
-                                error && <p className='text-red-500'>{error}</p>
-                            }
-                          
-                            <button className="btn btn-neutral mt-4">Login</button>
-                              <p className='font-medium'>Don't Have A Account? <Link className='text-red-500 underline' to="/auth/register"> Register </Link> </p>
-                        </fieldset>
-
-                    </form>
-
-                </div>
-            </div>
-
+              <p className="font-medium text-center mt-2">
+                Don't Have An Account?{' '}
+                <Link className="text-red-500 underline" to="/auth/register">
+                  Register
+                </Link>
+              </p>
+            </fieldset>
+          </form>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
