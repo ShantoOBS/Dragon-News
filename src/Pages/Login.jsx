@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router';
 
 export default function Login() {
 
-  const {loginUser,setError,setUser,error,user}=useContext(AuthContext);
+  const {loginUser,setError,setUser,error,forgatePass}=useContext(AuthContext);
   const nav=useNavigate();
   const location=useLocation();
  
@@ -16,14 +16,29 @@ export default function Login() {
 
       loginUser(email,password)
       .then((res)=>{
+        if(!res.user.emailVerified){
+            alert("please verify you mail,,");
+        
+        }
         setUser(res.user)
         nav(`${location.state?location.state:"/"}`)
+        
       })
       .catch((error)=>{setError(error.message)})
 
 
   }
-   console.log(user)
+  
+  const handleForgate=(event)=>{
+
+      event.preventDefault();
+      console.log('for');
+      const email=event.target.email.value;
+      forgatePass(email)
+      .then(()=>{alert("Go to the mail,,")})
+      .catch(()=>{})
+     
+  }
     return (
         <div className='flex justify-center items-center'>
 
@@ -39,9 +54,9 @@ export default function Login() {
                             <input type="email" className="input" placeholder="Email" name="email" required />
 
                             <label className="label">Password</label>
-                            <input type="password" className="input" placeholder="Password" name="password" required />
+                            <input type="password" className="input" placeholder="Password" name="password"  />
                             
-                            <div className='text-start'><a className="link link-hover ">Forgot password?</a></div>
+                            <button onClick={handleForgate} className='text-start hover:text-red-500 cursor-pointer'>Forgot password?</button>
 
                             {
                                 error && <p className='text-red-500'>{error}</p>

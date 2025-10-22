@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { AuthContext } from '../Provider/AuthProvider';
 
 export default function Register() {
-  const { cerateUser, setError, updatePro, setUser } = useContext(AuthContext);
+  const { cerateUser, setError, updatePro, setUser,emailVerify } = useContext(AuthContext);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -21,6 +21,12 @@ export default function Register() {
           .then(() => {
  
             setUser({ ...user, displayName: name, photoURL: photo });
+
+            emailVerify(user)
+            .then(()=>{alert("verify you mail,,")})
+            .catch((error)=>setError(error.message));
+
+
             
           })
           .catch((error) => {
